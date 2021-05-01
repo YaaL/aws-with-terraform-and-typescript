@@ -1,0 +1,34 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.idea
+.history
+.vscode
+.webpack
+
+# production
+dist
+
+# misc
+.DS_Store
+*.pem
+.direnv
+.webpack
+.vscode
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*
+!.envrc
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+sandbox.plan

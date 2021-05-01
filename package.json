@@ -1,0 +1,40 @@
+{
+  "name": "sqs-eventbridge-lambda-api-gatway-dynamobd-with-terraform",
+  "version": "0.0.1",
+  "description": "A simple typescript node project for AWS Lambda.",
+  "license": "ISC",
+  "keywords": [
+    "node",
+    "typescript",
+    "lambda",
+    "sqs",
+    "eventbridge",
+    "api-gateway",
+    "dynamodb"
+  ],
+  "scripts": {
+    "test": "jest",
+    "build": "npx webpack --mode=production",
+    "tf:fmt": "cd ./infra && terraform fmt",
+    "tf:init": "cd ./infra && terraform init",
+    "tf:validate": "cd ./infra && terraform validate",
+    "tf:plan": "cd ./infra && terraform plan -var-file=\"environments/sandbox.tfvars\" -out sandbox.plan -no-color",
+    "tf:apply": "cd ./infra && terraform apply sandbox.plan",
+    "tf:destroy": "cd ./infra && rm -rf dist/ && terraform destroy -var-file=\"environments/sandbox.tfvars\"",
+    "deploy": "rm -rf ./dist/ && npm run build && cd ./infra && npm run tf:fmt && npm run tf:validate && npm run tf:plan && npm run tf:apply"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.76",
+    "@types/aws-sdk": "^2.7.0",
+    "@types/jest": "^26.0.23",
+    "jest": "^26.6.3",
+    "ts-loader": "^9.1.1",
+    "typescript": "^4.2.4",
+    "webpack": "^5.36.1",
+    "webpack-cli": "^4.6.0"
+  },
+  "dependencies": {
+    "aws-lambda": "^1.0.6",
+    "aws-sdk": "^2.896.0"
+  }
+}
