@@ -1,4 +1,4 @@
-# sqs eventbridge lambda api-gateway dynamobd with terraform and typescript
+# AWS Services with Terraform and Typescript
 
 ## Architecture
 
