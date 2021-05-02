@@ -170,26 +170,29 @@ data "aws_iam_policy_document" "all_events_processor_lambda" {
   }
 }
 
-resource "aws_lambda_permission" "order_event_processor_lambda_permission" {
-  statement_id  = "AllowExecutionFromCloudWatch"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.order_event_processor_lambda.function_name
-  principal     = "events.amazonaws.com"
-  source_arn    = aws_cloudwatch_event_rule.order_event_processor_lambda.arn
+resource "aws_lambda_permission" "order_event_processor_lambda" {
+  statement_id   = "AllowExecutionFromCloudWatch"
+  action         = "lambda:InvokeFunction"
+  function_name  = aws_lambda_function.order_event_processor_lambda.function_name
+  principal      = "events.amazonaws.com"
+  source_account = data.aws_caller_identity.current.account_id
+  source_arn     = aws_cloudwatch_event_rule.order_event_processor_lambda.arn
 }
 
-resource "aws_lambda_permission" "product_event_processor_lambda_permission" {
-  statement_id  = "AllowExecutionFromCloudWatch"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.product_event_processor_lambda.function_name
-  principal     = "events.amazonaws.com"
-  source_arn    = aws_cloudwatch_event_rule.product_event_processor_lambda.arn
+resource "aws_lambda_permission" "product_event_processor_lambda" {
+  statement_id   = "AllowExecutionFromCloudWatch"
+  action         = "lambda:InvokeFunction"
+  function_name  = aws_lambda_function.product_event_processor_lambda.function_name
+  principal      = "events.amazonaws.com"
+  source_account = data.aws_caller_identity.current.account_id
+  source_arn     = aws_cloudwatch_event_rule.product_event_processor_lambda.arn
 }
 
-resource "aws_lambda_permission" "all_events_processor_lambda_permission" {
-  statement_id  = "AllowExecutionFromCloudWatch"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.all_events_processor_lambda.function_name
-  principal     = "events.amazonaws.com"
-  source_arn    = aws_cloudwatch_event_rule.all_events_processor_lambda.arn
+resource "aws_lambda_permission" "all_events_processor_lambda" {
+  statement_id   = "AllowExecutionFromCloudWatch"
+  action         = "lambda:InvokeFunction"
+  function_name  = aws_lambda_function.all_events_processor_lambda.function_name
+  principal      = "events.amazonaws.com"
+  source_account = data.aws_caller_identity.current.account_id
+  source_arn     = aws_cloudwatch_event_rule.all_events_processor_lambda.arn
 }

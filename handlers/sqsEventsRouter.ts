@@ -7,21 +7,19 @@ const eventBridge = new AWS.EventBridge()
 export async function sqsEventsRouter (event: SQSEvent) {
     try {
         for (const record of event.Records) {
-            console.log("Recors");
-            console.log(record);
-            
-            console.log("Body");
-            console.log(record.body);
+            const source = record.eventSourceARN.split(":")
+            console.log("Entry");
+            console.log(source);
+            const entry = {
+                EventBusName: 'default',
+                Source: record.eventSource,
+                DetailType: source[source.length -1],
+                Detail: record.body
+            }
 
-            const source = record.eventSource.split(":")
-            const result = await eventBridge.putEvents({
-                Entries: [{
-                    EventBusName: 'default',
-                    Source: record.eventSource,
-                    DetailType: source[source.length -1],
-                    Detail: record.body
-                }]
-            }).promise()
+            console.log("Entry");
+            console.log(entry);
+            const result = await eventBridge.putEvents({Entries: [entry]}).promise()
 
             console.log("PutEvents Results");
             console.log(result);
