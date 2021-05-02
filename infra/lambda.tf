@@ -10,7 +10,7 @@ resource "aws_lambda_function" "sqs_event_router_lambda" {
   handler                        = "${local.sqs_event_router_lambda}.handler"
   s3_bucket                      = aws_s3_bucket.sqs_event_router_lambda_bucket.bucket
   s3_key                         = aws_s3_bucket_object.sqs_event_router_lambda_bucket_object.key
-  role                           = aws_iam_role.lambda_exec_role.arn
+  role                           = aws_iam_role.sqs_event_router_lambda.arn
   runtime                        = var.lambda_runtime
   timeout                        = var.lambda_timeout
   memory_size                    = var.lambda_memory_size
@@ -41,7 +41,7 @@ resource "aws_lambda_function" "order_event_processor_lambda" {
   handler                        = "${local.order_event_processor_lambda}.handler"
   s3_bucket                      = aws_s3_bucket.order_event_processor_lambda_bucket.bucket
   s3_key                         = aws_s3_bucket_object.order_event_processor_lambda_bucket_object.key
-  role                           = aws_iam_role.lambda_exec_role.arn
+  role                           = aws_iam_role.order_event_processor_lambda.arn
   runtime                        = "nodejs14.x"
   timeout                        = var.lambda_timeout
   memory_size                    = var.lambda_memory_size
@@ -58,7 +58,7 @@ resource "aws_lambda_function" "product_event_processor_lambda" {
   handler                        = "${local.product_event_processor_lambda}.handler"
   s3_bucket                      = aws_s3_bucket.product_event_processor_lambda_bucket.bucket
   s3_key                         = aws_s3_bucket_object.product_event_processor_lambda_bucket_object.key
-  role                           = aws_iam_role.lambda_exec_role.arn
+  role                           = aws_iam_role.product_event_processor_lambda.arn
   runtime                        = var.lambda_runtime
   timeout                        = var.lambda_timeout
   memory_size                    = var.lambda_memory_size
@@ -75,7 +75,7 @@ resource "aws_lambda_function" "all_events_processor_lambda" {
   handler                        = "${local.all_events_processor_lambda}.handler"
   s3_bucket                      = aws_s3_bucket.all_events_processor_lambda_bucket.bucket
   s3_key                         = aws_s3_bucket_object.all_events_processor_lambda_bucket_object.key
-  role                           = aws_iam_role.lambda_exec_role.arn
+  role                           = aws_iam_role.all_events_processor_lambda.arn
   runtime                        = var.lambda_runtime
   timeout                        = var.lambda_timeout
   memory_size                    = var.lambda_memory_size
