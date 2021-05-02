@@ -86,3 +86,27 @@ resource "aws_lambda_function" "all_events_processor_lambda" {
     aws_s3_bucket_object.all_events_processor_lambda_bucket_object,
   ]
 }
+
+resource "aws_lambda_permission" "order_event_processor_lambda" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.order_event_processor_lambda.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.order_event_processor_lambda.arn
+}
+
+resource "aws_lambda_permission" "product_event_processor_lambda" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.product_event_processor_lambda.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.product_event_processor_lambda.arn
+}
+
+resource "aws_lambda_permission" "all_events_processor_lambda" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.all_events_processor_lambda.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.all_events_processor_lambda.arn
+}

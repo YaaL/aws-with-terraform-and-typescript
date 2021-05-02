@@ -1,29 +1,25 @@
 import { SQSEvent } from 'aws-lambda';
 import AWS from 'aws-sdk';
 
-AWS.config.region = process.env.AWS_REGION || 'us-east-1'
+AWS.config.region = process.env.AWS_REGION || 'eu-west-2'
 const eventBridge = new AWS.EventBridge()
 
 export async function sqsEventsRouter (event: SQSEvent) {
     try {
         for (const record of event.Records) {
             const source = record.eventSourceARN.split(":")
-            console.log("Entry");
-            console.log(source);
             const entry = {
                 EventBusName: 'default',
                 Source: record.eventSource,
                 DetailType: source[source.length -1],
-                Detail: record.body
+                Detail: record.body,
             }
-
-            console.log("Entry");
-            console.log(entry);
             const result = await eventBridge.putEvents({Entries: [entry]}).promise()
-
             console.log("PutEvents Results");
             console.log(result);
         }
+
+        return {};
     } catch (error) {
         console.log(error);
         throw error

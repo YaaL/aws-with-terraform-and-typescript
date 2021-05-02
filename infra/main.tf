@@ -9,9 +9,9 @@ resource "random_id" "id" {
 }
 
 resource "aws_sqs_queue" "orders_queue" {
-  name = "OrdersQueue"
+  name = "orders-queue-${var.environment}"
 }
 
 resource "aws_sqs_queue" "product_queue" {
-  name = "ProductQueue"
+  name = "product-queue-${var.environment}"
 }

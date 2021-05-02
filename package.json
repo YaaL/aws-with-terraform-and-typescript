@@ -36,6 +36,7 @@
     "webpack-cli": "^4.6.0"
   },
   "dependencies": {
+    "@aws-sdk/client-eventbridge": "^3.14.0",
     "aws-lambda": "^1.0.6",
     "aws-sdk": "^2.896.0"
   }
