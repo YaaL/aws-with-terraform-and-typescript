@@ -30,10 +30,10 @@ $ npm run deploy
 
 ## Terraforming
 ```bash
-$ tf:fmt       # terraform format
-$ tf:init      # terraform init
-$ tf:validate  # terraform validate
-$ tf:plan      # terraform plan
-$ tf:apply     # terraform apply
-$ tf:destroy   # terraform destroy
+$ npm run tf:fmt       # terraform format
+$ npm run tf:init      # terraform init
+$ npm run tf:validate  # terraform validate
+$ npm run tf:plan      # terraform plan
+$ npm run tf:apply     # terraform apply
+$ npm run tf:destroy   # terraform destroy
 ```
