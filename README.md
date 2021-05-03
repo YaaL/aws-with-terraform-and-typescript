@@ -30,8 +30,8 @@ $ npm run deploy
 
 ## Terraforming
 ```bash
-$ npm run tf:fmt       # terraform format
 $ npm run tf:init      # terraform init
+$ npm run tf:fmt       # terraform format
 $ npm run tf:validate  # terraform validate
 $ npm run tf:plan      # terraform plan
 $ npm run tf:apply     # terraform apply
