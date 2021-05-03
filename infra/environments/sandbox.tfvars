@@ -9,6 +9,9 @@ s3_force_destroy   = true
 s3_versioning      = true
 s3_versioning_expiration = 1
 cloudwatch_logs_retention = 14
+product_table = "product"
+order_table = "order"
+
 tags = {
   Owner       = "BeautyPie"
   Environment = "sandbox"

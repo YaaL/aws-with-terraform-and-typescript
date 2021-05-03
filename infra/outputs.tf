@@ -1,7 +1,7 @@
-output "OrderQueue" {
+output "order-queue" {
   value = aws_sqs_queue.orders_queue.id
 }
 
-output "ProductQueue" {
+output "product-queue" {
   value = aws_sqs_queue.product_queue.id
 }

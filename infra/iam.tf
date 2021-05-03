@@ -86,6 +86,22 @@ resource "aws_iam_policy" "order_event_processor_lambda" {
 
 data "aws_iam_policy_document" "order_event_processor_lambda" {
   statement {
+    sid       = "ReadWriteTable"
+    effect    = "Allow"
+    resources = ["arn:aws:dynamodb:*:*:table/${var.order_table}-${var.environment}"]
+
+    actions = [
+      "dynamodb:BatchGetItem",
+      "dynamodb:GetItem",
+      "dynamodb:Query",
+      "dynamodb:Scan",
+      "dynamodb:BatchWriteItem",
+      "dynamodb:PutItem",
+      "dynamodb:UpdateItem"
+    ]
+  }
+
+  statement {
     sid       = "AllowCreatingLogGroups"
     effect    = "Allow"
     resources = ["arn:aws:logs:${var.region}:*:*"]
@@ -118,6 +134,22 @@ resource "aws_iam_policy" "product_event_processor_lambda" {
 }
 
 data "aws_iam_policy_document" "product_event_processor_lambda" {
+
+  statement {
+    sid       = "ReadWriteTable"
+    effect    = "Allow"
+    resources = ["arn:aws:dynamodb:*:*:table/${var.product_table}-${var.environment}"]
+
+    actions = [
+      "dynamodb:BatchGetItem",
+      "dynamodb:GetItem",
+      "dynamodb:Query",
+      "dynamodb:Scan",
+      "dynamodb:BatchWriteItem",
+      "dynamodb:PutItem",
+      "dynamodb:UpdateItem"
+    ]
+  }
   statement {
     sid       = "AllowCreatingLogGroups"
     effect    = "Allow"
