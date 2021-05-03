@@ -18,14 +18,19 @@ $ npm i
 $ npm run build
 ```
 
-## Testing
+## Terraform Init
 ```bash
-$ npm run test
+$ npm run tf:init
 ```
 
 ## Deploying
 ```bash
 $ npm run deploy
+```
+
+## Testing
+```bash
+$ npm run test
 ```
 
 ## Terraforming
