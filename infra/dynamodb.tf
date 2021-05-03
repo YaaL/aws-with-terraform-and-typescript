@@ -12,6 +12,10 @@ resource "aws_dynamodb_table" "events" {
     enabled = true
   }
 
+  server_side_encryption {
+    enabled = true
+  }
+
   ttl {
     attribute_name = "ttl"
     enabled        = true
@@ -22,7 +26,7 @@ resource "aws_dynamodb_table" "products" {
   name         = "${var.products_table}-${var.environment}"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "Id"
-  range_key    = "Status"
+  range_key    = "CategoryId"
 
   attribute {
     name = "Id"
@@ -30,11 +34,15 @@ resource "aws_dynamodb_table" "products" {
   }
 
   attribute {
-    name = "Status"
+    name = "CategoryId"
     type = "S"
   }
 
   point_in_time_recovery {
+    enabled = true
+  }
+
+  server_side_encryption {
     enabled = true
   }
 }
@@ -56,6 +64,10 @@ resource "aws_dynamodb_table" "orders" {
   }
 
   point_in_time_recovery {
+    enabled = true
+  }
+  
+  server_side_encryption {
     enabled = true
   }
 }
