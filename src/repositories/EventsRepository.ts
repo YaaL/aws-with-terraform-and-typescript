@@ -18,7 +18,7 @@ const enum EventAttributs {
 export default class EventsRepository extends Repository {
     private readonly productsTable = "events-sandbox"
 
-    create(event: Event){
+    async create(event: Event){
 
         const secondsInAnHour = 3600;
         const secondsSinceEpoch = Math.round(Date.now() / 1000);
@@ -35,7 +35,7 @@ export default class EventsRepository extends Repository {
             Item: item
           };
 
-        this.client.send(new PutItemCommand(params))
+        await this.client.send(new PutItemCommand(params))
 
         return item
     }

@@ -5,7 +5,7 @@ type Order = {
     id: string;
     status: string;
     totalPrice: number;
-  };
+};
 
 const enum OrderAttributes {
     id = "Id",
@@ -19,16 +19,16 @@ const enum OrderAttributes {
 export default class OrderRepository extends Repository {
     private readonly productsTable = "orders-sandbox"
 
-    create(product: Order){
+    async create(product: Order) {
         const params: PutItemCommandInput = {
             TableName: this.productsTable,
             Item: {
-                [OrderAttributes.id]: {[OrderAttributes.idType]: product.id},
-                [OrderAttributes.status]: {[OrderAttributes.statusType]: product.status},
-                [OrderAttributes.totalPrice]: {[OrderAttributes.totalPriceType]: `${product.totalPrice}`},
+                [OrderAttributes.id]: { [OrderAttributes.idType]: product.id },
+                [OrderAttributes.status]: { [OrderAttributes.statusType]: product.status },
+                [OrderAttributes.totalPrice]: { [OrderAttributes.totalPriceType]: `${product.totalPrice}` },
             }
-          };
+        };
 
-        this.client.send(new PutItemCommand(params))
+        await this.client.send(new PutItemCommand(params))
     }
 }
