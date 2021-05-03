@@ -26,6 +26,22 @@ resource "aws_iam_policy" "sqs_event_router_lambda" {
 data "aws_iam_policy_document" "sqs_event_router_lambda" {
 
   statement {
+    sid       = "ReadWriteTable"
+    effect    = "Allow"
+    resources = ["arn:aws:dynamodb:*:*:table/${var.events_table}-${var.environment}"]
+
+    actions = [
+      "dynamodb:BatchGetItem",
+      "dynamodb:GetItem",
+      "dynamodb:Query",
+      "dynamodb:Scan",
+      "dynamodb:BatchWriteItem",
+      "dynamodb:PutItem",
+      "dynamodb:UpdateItem"
+    ]
+  }
+
+  statement {
     sid       = "AllowPutEventsPermissions"
     effect    = "Allow"
     resources = ["arn:aws:events:${var.region}:*:event-bus/*"]
@@ -88,7 +104,7 @@ data "aws_iam_policy_document" "order_event_processor_lambda" {
   statement {
     sid       = "ReadWriteTable"
     effect    = "Allow"
-    resources = ["arn:aws:dynamodb:*:*:table/${var.order_table}-${var.environment}"]
+    resources = ["arn:aws:dynamodb:*:*:table/${var.orders_table}-${var.environment}"]
 
     actions = [
       "dynamodb:BatchGetItem",
@@ -138,7 +154,7 @@ data "aws_iam_policy_document" "product_event_processor_lambda" {
   statement {
     sid       = "ReadWriteTable"
     effect    = "Allow"
-    resources = ["arn:aws:dynamodb:*:*:table/${var.product_table}-${var.environment}"]
+    resources = ["arn:aws:dynamodb:*:*:table/${var.products_table}-${var.environment}"]
 
     actions = [
       "dynamodb:BatchGetItem",

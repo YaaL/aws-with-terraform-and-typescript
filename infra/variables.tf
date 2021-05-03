@@ -8,8 +8,9 @@ variable "s3_force_destroy" {}
 variable "s3_versioning" {}
 variable "s3_versioning_expiration" {}
 variable "cloudwatch_logs_retention" {}
-variable "product_table" {}
-variable "order_table" {}
+variable "products_table" {}
+variable "orders_table" {}
+variable "events_table" {}
 variable "tags" {
   type = object({
     Owner       = string

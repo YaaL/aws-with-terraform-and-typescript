@@ -41,7 +41,7 @@ resource "aws_cloudwatch_event_rule" "order_event_processor_lambda" {
 
   event_pattern = <<EOF
 {
-  "detail-type": ["OrdersQueue"]
+  "detail": {"orderId": [{"prefix": ""}]}
 }
 EOF
 }
@@ -58,7 +58,7 @@ resource "aws_cloudwatch_event_rule" "product_event_processor_lambda" {
 
   event_pattern = <<EOF
 {
-  "detail-type": ["ProductQueue"]
+  "detail": {"productId": [{"prefix": ""}]}
 }
 EOF
 }
