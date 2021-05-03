@@ -185,35 +185,52 @@ data "aws_iam_policy_document" "product_event_processor_lambda" {
   }
 }
 
-resource "aws_iam_role" "all_events_processor_lambda" {
-  assume_role_policy = data.aws_iam_policy_document.lambda.json
-}
-
-resource "aws_iam_role_policy_attachment" "all_events_processor_lambda" {
-  role       = aws_iam_role.all_events_processor_lambda.name
-  policy_arn = aws_iam_policy.all_events_processor_lambda.arn
-}
-
-resource "aws_iam_policy" "all_events_processor_lambda" {
-  policy = data.aws_iam_policy_document.all_events_processor_lambda.json
-}
-
-data "aws_iam_policy_document" "all_events_processor_lambda" {
+data "aws_iam_policy_document" "event_assume_role" {
   statement {
-    sid       = "AllowCreatingLogGroups"
-    effect    = "Allow"
-    resources = ["arn:aws:logs:${var.region}:*:*"]
-    actions   = ["logs:CreateLogGroup"]
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["events.amazonaws.com"]
+    }
   }
+}
 
+resource "aws_iam_role" "product_event_processor_rule" {
+  assume_role_policy = data.aws_iam_policy_document.event_assume_role.json
+}
+
+resource "aws_iam_role" "order_event_processor_rule" {
+  assume_role_policy = data.aws_iam_policy_document.event_assume_role.json
+}
+
+resource "aws_iam_role_policy_attachment" "product_event_processor_rule" {
+  role       = aws_iam_role.product_event_processor_rule.name
+  policy_arn = aws_iam_policy.product_event_processor_rule.arn
+}
+
+resource "aws_iam_role_policy_attachment" "order_event_processor_rule" {
+  role       = aws_iam_role.order_event_processor_rule.name
+  policy_arn = aws_iam_policy.order_event_processor_rule.arn
+}
+
+resource "aws_iam_policy" "order_event_processor_rule" {
+  policy = data.aws_iam_policy_document.allow_kinesis_put.json
+}
+
+resource "aws_iam_policy" "product_event_processor_rule" {
+  policy = data.aws_iam_policy_document.allow_kinesis_put.json
+}
+
+data "aws_iam_policy_document" "allow_kinesis_put" {
   statement {
-    sid       = "AllowWritingLogs"
+    sid       = "AllowKinesisPut"
     effect    = "Allow"
-    resources = ["arn:aws:logs:${var.region}:*:log-group:/aws/lambda/*:*"]
+    resources = ["arn:aws:kinesis:*:*:*"]
 
     actions = [
-      "logs:CreateLogStream",
-      "logs:PutLogEvents",
+      "kinesis:PutRecord",
+      "kinesis:PutRecords"
     ]
   }
 }

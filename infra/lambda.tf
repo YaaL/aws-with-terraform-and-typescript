@@ -2,7 +2,6 @@ locals {
   sqs_event_router_lambda        = "sqsEventsRouter"
   order_event_processor_lambda   = "orderEventProcessor"
   product_event_processor_lambda = "productEventProcessor"
-  all_events_processor_lambda    = "allEventsProcessor"
 }
 
 resource "aws_lambda_function" "sqs_event_router_lambda" {
@@ -70,29 +69,12 @@ resource "aws_lambda_function" "product_event_processor_lambda" {
   ]
 }
 
-resource "aws_lambda_function" "all_events_processor_lambda" {
-  function_name                  = "${local.all_events_processor_lambda}-${var.environment}"
-  handler                        = "${local.all_events_processor_lambda}.handler"
-  s3_bucket                      = aws_s3_bucket.all_events_processor_lambda_bucket.bucket
-  s3_key                         = aws_s3_bucket_object.all_events_processor_lambda_bucket_object.key
-  role                           = aws_iam_role.all_events_processor_lambda.arn
-  runtime                        = var.lambda_runtime
-  timeout                        = var.lambda_timeout
-  memory_size                    = var.lambda_memory_size
-  reserved_concurrent_executions = 1
-  source_code_hash               = data.archive_file.all_events_processor_lambda_archive.output_base64sha256
-
-  depends_on = [
-    aws_s3_bucket_object.all_events_processor_lambda_bucket_object,
-  ]
-}
-
 resource "aws_lambda_permission" "order_event_processor_lambda" {
   statement_id  = "AllowExecutionFromCloudWatch"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.order_event_processor_lambda.function_name
   principal     = "events.amazonaws.com"
-  source_arn    = aws_cloudwatch_event_rule.order_event_processor_lambda.arn
+  source_arn    = aws_cloudwatch_event_rule.order_event_processor.arn
 }
 
 resource "aws_lambda_permission" "product_event_processor_lambda" {
@@ -100,13 +82,5 @@ resource "aws_lambda_permission" "product_event_processor_lambda" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.product_event_processor_lambda.function_name
   principal     = "events.amazonaws.com"
-  source_arn    = aws_cloudwatch_event_rule.product_event_processor_lambda.arn
-}
-
-resource "aws_lambda_permission" "all_events_processor_lambda" {
-  statement_id  = "AllowExecutionFromCloudWatch"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.all_events_processor_lambda.function_name
-  principal     = "events.amazonaws.com"
-  source_arn    = aws_cloudwatch_event_rule.all_events_processor_lambda.arn
+  source_arn    = aws_cloudwatch_event_rule.product_event_processor.arn
 }
