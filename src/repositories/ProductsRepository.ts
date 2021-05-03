@@ -4,6 +4,7 @@ import { Repository } from "./Repository";
 type Product = {
     id: string;
     categoryId: string;
+    productRating: string;
     name: string;
     status: string;
   };
@@ -13,6 +14,8 @@ const enum ProductAttributs {
     idType = "S",
     categoryId = "CategoryId",
     categoryIdType = "S",
+    productRating = "ProductRating",
+    productRationgType = "N",
     name = "Name",
     nameType = "S",
     status = "Status",
@@ -28,6 +31,7 @@ export default class ProductsRepository extends Repository {
             Item: {
                 [ProductAttributs.id]: {[ProductAttributs.idType]: product.id},
                 [ProductAttributs.categoryId]: {[ProductAttributs.categoryIdType]: product.categoryId},
+                [ProductAttributs.productRating]: {[ProductAttributs.productRationgType]: `${product.productRating}`},
                 [ProductAttributs.name]: {[ProductAttributs.nameType]: product.name},
                 [ProductAttributs.status]: {[ProductAttributs.statusType]: product.status},
             }

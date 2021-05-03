@@ -9,6 +9,7 @@ export async function productEventsProcessor(event: EventBridgeEvent<any, any>) 
         await productsRepository.create({
             id: event.detail.productId,
             categoryId: event.detail.categoryId,
+            productRating: event.detail.productRating,
             name: event.detail.name,
             status: event.detail.status
         })

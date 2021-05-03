@@ -11,6 +11,7 @@ test('should return true', async() => {
         MessageBody: JSON.stringify({
             productId: v4(),
             categoryId: v4(),
+            productRating: 4,
             name: 'Make-up',
             status: 'active',
         }),

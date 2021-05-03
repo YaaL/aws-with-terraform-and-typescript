@@ -26,7 +26,6 @@ resource "aws_dynamodb_table" "products" {
   name         = "${var.products_table}-${var.environment}"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "Id"
-  range_key    = "CategoryId"
 
   attribute {
     name = "Id"
@@ -36,6 +35,17 @@ resource "aws_dynamodb_table" "products" {
   attribute {
     name = "CategoryId"
     type = "S"
+  }
+
+  attribute {
+    name = "ProductRating"
+    type = "N"
+  }
+  global_secondary_index {
+    name            = "ProductCategoryRatingIndex"
+    hash_key        = "CategoryId"
+    range_key       = "ProductRating"
+    projection_type = "ALL"
   }
 
   point_in_time_recovery {
