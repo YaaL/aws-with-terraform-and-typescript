@@ -234,3 +234,42 @@ data "aws_iam_policy_document" "allow_kinesis_put" {
     ]
   }
 }
+
+data "aws_iam_policy_document" "api_role" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["apigateway.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role" "api" {
+  assume_role_policy = data.aws_iam_policy_document.api_role.json
+}
+
+resource "aws_iam_role_policy_attachment" "api" {
+  role       = aws_iam_role.api.name
+  policy_arn = aws_iam_policy.api.arn
+}
+
+resource "aws_iam_policy" "api" {
+  policy = data.aws_iam_policy_document.api_policy.json
+}
+
+data "aws_iam_policy_document" "api_policy" {
+  statement {
+    sid       = "ReadWriteTable"
+    effect    = "Allow"
+    resources = ["arn:aws:dynamodb:*:*:table/${var.orders_table}-${var.environment}", "arn:aws:dynamodb:*:*:table/${var.products_table}-${var.environment}"]
+
+    actions = [
+      "dynamodb:BatchGetItem",
+      "dynamodb:GetItem",
+      "dynamodb:Query",
+      "dynamodb:Scan"
+    ]
+  }
+}
