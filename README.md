@@ -23,12 +23,17 @@ $ npm run apply # runs terraform init, format, validate, plan and apply
 $ npm run deploy # builds the code and runs terraform apply command
 ```
 
+## Destroying
+```bash
+$ npm run tf:destroy
+```
+
 ## Testing
 ```bash
 $ npm run test
 ```
 
-## Terraforming
+## Terrafor Commands
 ```bash
 $ npm run tf:init      # terraform init
 $ npm run tf:fmt       # terraform format
