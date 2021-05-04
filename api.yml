@@ -1,0 +1,120 @@
+# https://github.com/rpstreef/openapi-tf-example/blob/master/services/api/example.yml
+# https://apievangelist.com/2020/02/10/backend-aws-api-gateway-integration-openapi-extensions/
+# https://medium.com/@likhita507/using-api-gateway-to-get-data-from-dynamo-db-using-without-using-aws-lambda-e51434a4f5a0
+openapi: 3.0.1
+info:
+  title: openapi-example
+  version: 0.0.1
+  description: "<p>This is an example OpenAPI specification document for our identity management solution</p>"
+  termsOfService: "http://example.com/tos"
+  contact:
+    email: "example@example.com"
+servers:
+- url: http://example.com/
+  variables:
+    basePath:
+      default: /v1
+paths:
+  /orders:
+    get:
+      operationId: getOrder
+      description: get Order details by ID
+      x-amazon-apigateway-integration:
+        uri: "https://ip-ranges.amazonaws.com/ip-ranges.json"
+        httpMethod: "GET"
+        type: "HTTP_PROXY"
+      responses:
+        404:
+          $ref: '#/components/responses/404NotFound'
+        500:
+          $ref: '#/components/responses/500APIError'
+  # /products:
+  #   get:
+  #     operationId: getOrder
+  #     description: get Order details by ID
+  #     x-amazon-apigateway-integration:
+  #       uri: "arn:aws:apigateway:eu-west-2:dynamodb:action/Scan"
+  #       httpMethod: "GET"
+  #       type: "aws"
+  #     responses:
+  #       404:
+  #         $ref: '#/components/responses/404NotFound'
+  #       500:
+  #         $ref: '#/components/responses/500APIError'
+components:
+  schemas:
+    Empty:
+      title: "Empty Schema"
+      type: "object"
+  responses:
+    404NotFound:
+      description: The specified resource was not found.
+      headers:
+        Access-Control-Allow-Origin:
+          schema:
+            type: "string"
+        Access-Control-Allow-Methods:
+          schema:
+            type: "string"
+        Access-Control-Max-Age:
+          schema:
+            type: "string"
+        Access-Control-Allow-Headers:
+          schema:
+            type: "string"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: string
+                example: "404"
+              message:
+                type: string
+                example: The specified resource was not found
+    500APIError:
+      description: Unexpected error
+      headers:
+        Access-Control-Allow-Origin:
+          schema:
+            type: "string"
+        Access-Control-Allow-Methods:
+          schema:
+            type: "string"
+        Access-Control-Max-Age:
+          schema:
+            type: "string"
+        Access-Control-Allow-Headers:
+          schema:
+            type: "string"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: string
+                example: "500"
+              message:
+                type: string
+                example: This is an error
+    cors:
+      description: "200 response"
+      headers:
+        Access-Control-Allow-Origin:
+          schema:
+            type: "string"
+        Access-Control-Allow-Methods:
+          schema:
+            type: "string"
+        Access-Control-Max-Age:
+          schema:
+            type: "string"
+        Access-Control-Allow-Headers:
+          schema:
+            type: "string"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Empty"
