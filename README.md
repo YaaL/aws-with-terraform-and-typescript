@@ -8,24 +8,19 @@ It is assumed that Terraform and Nodejs is already installed on your computer an
 ## Architecture
 ![Architecture](architecture.png)
 
-## Install
+## Install packages
 ```bash
 $ npm i
 ```
 
-## Build
+## Terraform apply
 ```bash
-$ npm run build
-```
-
-## Terraform Init
-```bash
-$ npm run tf:init
+$ npm run apply # runs terraform init, format, validate, plan and apply
 ```
 
 ## Deploying
 ```bash
-$ npm run deploy
+$ npm run deploy # builds the code and runs terraform apply command
 ```
 
 ## Testing

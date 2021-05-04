@@ -21,7 +21,7 @@
     "tf:plan": "cd ./infra && terraform plan -var-file=\"environments/sandbox.tfvars\" -out sandbox.plan -no-color",
     "tf:apply": "cd ./infra && terraform apply sandbox.plan",
     "tf:destroy": "cd ./infra && rm -rf dist/ && terraform destroy -var-file=\"environments/sandbox.tfvars\"",
-    "apply": "cd ./infra && npm run tf:validate && npm run tf:plan && npm run tf:apply",
+    "apply": "cd ./infra && npm run tf:init && npm run tf:fmt && npm run tf:validate && npm run tf:plan && npm run tf:apply",
     "deploy": "rm -rf ./dist/ && npm run build && cd ./infra && npm run tf:fmt && npm run tf:validate && npm run tf:plan && npm run tf:apply"
   },
   "devDependencies": {
