@@ -20,6 +20,10 @@ resource "aws_dynamodb_table" "events" {
     attribute_name = "ttl"
     enabled        = true
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_dynamodb_table" "products" {
@@ -55,6 +59,10 @@ resource "aws_dynamodb_table" "products" {
   server_side_encryption {
     enabled = true
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_dynamodb_table" "orders" {
@@ -79,5 +87,9 @@ resource "aws_dynamodb_table" "orders" {
 
   server_side_encryption {
     enabled = true
+  }
+
+  lifecycle {
+    prevent_destroy = true
   }
 }

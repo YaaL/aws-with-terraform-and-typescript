@@ -1,4 +1,4 @@
- data "template_file" "aws_api_swagger" {
+data "template_file" "aws_api_swagger" {
   template = file("../api.yml")
 }
 
@@ -8,8 +8,8 @@ resource "aws_api_gateway_rest_api" "api" {
 }
 
 resource "aws_api_gateway_stage" "api_gateway_stage" {
-  stage_name =  var.environment
-  rest_api_id = aws_api_gateway_rest_api.api.id
+  stage_name    = var.environment
+  rest_api_id   = aws_api_gateway_rest_api.api.id
   deployment_id = aws_api_gateway_deployment.api_gateway_deployment.id
 }
 
