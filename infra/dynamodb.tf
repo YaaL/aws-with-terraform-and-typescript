@@ -21,9 +21,9 @@ resource "aws_dynamodb_table" "events" {
     enabled        = true
   }
 
-  # lifecycle {
-  #   prevent_destroy = true
-  # }
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_dynamodb_table" "products" {
@@ -89,7 +89,7 @@ resource "aws_dynamodb_table" "orders" {
     enabled = true
   }
 
-  # lifecycle {
-  #   prevent_destroy = true
-  # }
+  lifecycle {
+    prevent_destroy = true
+  }
 }
